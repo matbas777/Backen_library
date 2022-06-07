@@ -20,7 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "first_name",
             "last_name",
-            "e_mail"
+            "e_mail",
+            "is_returned"
         )
 
 

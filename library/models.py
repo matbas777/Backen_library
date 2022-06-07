@@ -16,7 +16,8 @@ class Book(models.Model):
 
 class Borrower(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    user = models.ManyToManyField(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_of_delivery = models.DateField
+    is_returned = models.BooleanField(default=False)
 
 
