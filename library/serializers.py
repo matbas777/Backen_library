@@ -1,3 +1,5 @@
+from datetime import timedelta, datetime
+
 from rest_framework import serializers
 
 from library.models import Book, User, Borrower
@@ -18,9 +20,20 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             "id",
+            "username",
             "first_name",
             "last_name",
-            "e_mail"
+            "e_mail",
+            "password"
+        )
+
+
+class AuthenticationUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
         )
 
 
@@ -50,7 +63,6 @@ class NewBorrowerSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "book",
-            "user",
             "date_of_delivery",
             "is_returned"
         )
@@ -62,5 +74,8 @@ class NewBorrowerSerializer(serializers.ModelSerializer):
         bookk = quantity.get('book')
         if Borrower.objects.filter(book=bookk, is_returned=False):
             raise serializers.ValidationError('nie mozna wypozyczyc ksiazki jest ona juz wypozyczona')
+        date_of_delivery = quantity.get('date_of_delivery')
+        if date_of_delivery > datetime.today().date() + timedelta(days=30):
+            raise serializers.ValidationError('Nie mozesz wypozyczyc ksizki wiecej niz na 30 dni')
         return quantity
 

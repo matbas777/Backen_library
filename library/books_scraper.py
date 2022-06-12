@@ -13,7 +13,7 @@ selector = soup_selector.findAll("a")
 last_page = selector[-2]
 page_number = int(last_page.get_text())
 
-for _ in range(page_number - 1):
+for _ in range(page_number):
     url = f"https://www.empik.com/bestsellery/ksiazki?searchCategory=31&hideUnavailable=true&start={products}"
     r = requests.get(url)
     soup = BeautifulSoup(r.content, "html.parser")
