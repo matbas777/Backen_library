@@ -5,7 +5,6 @@ from django.db import models
 
 
 class MyAccountManager(BaseUserManager):
-
     def create_user(self, e_mail, username, password=None):
         if not e_mail:
             raise ValueError("Uzytkownik musi podac adres e-mail")
@@ -29,15 +28,14 @@ class User(AbstractBaseUser):
 
     objects = MyAccountManager()
 
-    USERNAME_FIELD = 'e_mail'
-    REQUIRED_FIELDS = 'username'
+    USERNAME_FIELD = "e_mail"
+    REQUIRED_FIELDS = "username"
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"
 
 
 class Book(models.Model):
-
     def __str__(self):
         return self.book_title
 
@@ -50,5 +48,3 @@ class Borrower(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_of_delivery = models.DateField(null=True)
     is_returned = models.BooleanField(default=False)
-
-

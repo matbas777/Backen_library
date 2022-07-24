@@ -25,4 +25,3 @@ for _ in range(page_number):
         author_name = tag_author_name.get_text().splitlines()[-1]
         Book.objects.create(book_title=title_book, author_name=author_name)
     products += 30
-
